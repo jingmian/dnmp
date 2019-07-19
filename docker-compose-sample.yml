@@ -51,7 +51,19 @@ services:
       - SYS_PTRACE
     networks:
       - default
-
+      
+  php54:
+    image: leleos/php-fpm:5.4-with-xdebug
+    volumes:
+      - ${SOURCE_DIR}:/var/www/html/:rw
+      - ${PHP54_PHP_CONF_FILE}:/usr/local/etc/php/php.ini:ro
+      - ./conf/php-fpm.conf:/usr/local/etc/php-fpm.d/www.conf:rw
+      - ${PHP54_LOG_DIR}:/var/log/php
+    cap_add:
+      - SYS_PTRACE
+    networks:
+      - default
+      
   mysql:
     image: mysql:${MYSQL_VERSION}
     ports:
